@@ -50,4 +50,4 @@ After generate, you can find 'top.bin' file under project folder.
 
 ## Upload & Test
 
-Same as [FtBasicWrite](../FtBasicWrite/README.md)
+Same as [FtBasicWrite](../FtBasicWrite/README.md#test)

@@ -50,4 +50,4 @@
 
 ## 업로드와 테스트
 
-[이전 방식](../FtBasicWrite/README.md) 을 참고합니다.
+[이전 방식](../FtBasicWrite/README_ko.md#테스트) 을 참고합니다.

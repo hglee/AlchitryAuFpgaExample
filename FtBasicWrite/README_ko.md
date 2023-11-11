@@ -95,7 +95,7 @@ Done.
 
 ## 테스트
 
-[FtClient](../FtClient/README_ko.md) 의 'TestRead' 프로그램을 사용해서 테스트 할 수 있습니다.
+[FtClient](../FtClient/README_ko.md#읽기-테스트) 의 'TestRead' 프로그램을 사용해서 테스트 할 수 있습니다.
 
 FTDI 쪽 예제를 사용하려면 아래 방법을 사용할 수 있습니다.
 
