@@ -5,3 +5,4 @@ Alchitry Au FPGA Board Example Project
 * [DDR Intro Example](BasicDDR/README.md)
 * [FT600 FT Board Basic Example](FtBasicWrite/README.md)
 * [FT600 FT Board FIFO Example](FtFIFOWrite/README.md)
+* [FT600 Read/Write Client Example](FtClient/README.md)

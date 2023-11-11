@@ -95,6 +95,10 @@ Done.
 
 ## Test
 
+You can use [FtClient](../FtClient/README.md) to test.
+
+If you want to use FTDI example, follow belows.
+
 1. Prepare sample program
 
 You can use D3XX sample program in FTDI homepage: https://ftdichip.com/drivers/d3xx-drivers/
