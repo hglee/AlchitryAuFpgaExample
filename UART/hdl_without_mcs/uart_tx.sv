@@ -4,6 +4,9 @@
  *
  * Origin from FPGA Prototyping by SystemVerilog Examples - Pong P. Chu
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module uart_tx
   #(
     parameter DBIT = 8, // data bits
@@ -108,4 +111,7 @@ module uart_tx
 
    // output
    assign tx = tx_reg;
-endmodule // uart_tx
+
+endmodule: uart_tx
+
+`end_keywords

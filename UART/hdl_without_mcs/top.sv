@@ -2,6 +2,9 @@
  * @file top.sv
  * @brief top level HDL
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module top
    (
     input logic clk,
@@ -126,4 +129,6 @@ module top
    // output
    assign led = {(state_reg == tx_text) ? 1'b1 : 1'b0, 7'b0000001};
 
-endmodule // top
+endmodule: top
+
+`end_keywords

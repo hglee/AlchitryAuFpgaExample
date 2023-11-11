@@ -9,6 +9,9 @@
  * 따라서 v + 1 = f / (16 * b)
  * 즉 v = f / (16 * b) - 1
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module baud_gen
   (
    input logic clk, reset,
@@ -33,4 +36,7 @@ module baud_gen
 
    // output logic
    assign tick = (r_reg == 1);
-endmodule // baud_gen
+
+endmodule: baud_gen
+
+`end_keywords
