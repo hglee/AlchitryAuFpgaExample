@@ -6,14 +6,18 @@
  *
  * dynamic index 사용
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module reg_file
   #(parameter DATA_WIDTH = 8, // number of bits
     ADDR_WIDTH = 2 // number of address bits
     )
-   (input logic clk,
-    input logic wr_en,
-    input logic [ADDR_WIDTH - 1:0] w_addr, r_addr,
-    input logic [DATA_WIDTH - 1:0] w_data,
+   (
+    input logic                     clk,
+    input logic                     wr_en,
+    input logic [ADDR_WIDTH - 1:0]  w_addr, r_addr,
+    input logic [DATA_WIDTH - 1:0]  w_data,
     output logic [DATA_WIDTH - 1:0] r_data
     );
 
@@ -29,4 +33,6 @@ module reg_file
    // read operation
    assign r_data = array_reg[r_addr]; // 합성 시 decoding, mux logic으로 합성됨
    
-endmodule // reg_file
+endmodule: reg_file
+
+`end_keywords

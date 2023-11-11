@@ -4,6 +4,9 @@
  *
  * Origin from FPGA Prototyping by SystemVerilog Examples - Pong P. Chu
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module uart_tx
   #(
     parameter DBIT = 8, // data bits
@@ -18,7 +21,7 @@ module uart_tx
     );
 
    // fsm state type
-   typedef enum  {idle, start, data, stop} state_type;
+   typedef enum logic [1:0] {idle, start, data, stop} state_type;
 
    // signal declare
    state_type state_reg, state_next;
@@ -108,4 +111,7 @@ module uart_tx
 
    // output
    assign tx = tx_reg;
-endmodule // uart_tx
+
+endmodule: uart_tx
+
+`end_keywords

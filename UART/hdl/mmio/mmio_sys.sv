@@ -6,102 +6,125 @@
  *
  * 3 I/O cores: timer, UART, GPO
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 `include "io_map.svh"
+
 module mmio_sys
+  import vanilla_pkg::*;
   #(
     parameter N_LED = 8
     )
    (
-    input logic              clk,
-    input logic              reset,
-    // FPro bus
-    input logic              mmio_cs,
-    input logic              mmio_wr,
-    input logic              mmio_rd,
-    input logic [20:0]       mmio_addr,
-    input logic [31:0]       mmio_wr_data,
-    output logic [31:0]      mmio_rd_data,
+    // WISHBONE interface
+    input logic                        CLK_I,
+    input logic                        RST_I,
+    input logic [`MMIO_ADDR_WIDTH-1:0] ADDR_I,
+    input logic [`DATA_WIDTH-1:0]      DAT_I,
+    output logic [`DATA_WIDTH-1:0]     DAT_O,
+    input logic                        CYC_I,
+    input logic                        STB_I,
+    input logic                        WE_I,
+    output logic                       ACK_O,
+
     // LEDs
-    output logic [N_LED-1:0] led,
+    output logic [N_LED-1:0]           led,
+
     // uart
-    input logic              rx,
-    output logic             tx
+    input logic                        rx,
+    output logic                       tx
     );
 
    // signal
-   logic [63:0]              mem_rd_array;
-   logic [63:0]              mem_wr_array;
-   logic [63:0]              cs_array;
-   logic [4:0]               reg_addr_array [63:0];
-   logic [31:0]              rd_data_array [63:0];
-   logic [31:0]              wr_data_array [63:0];
+   logic [`NUM_SLOTS-1:0]              CYC_O_array;
+   logic [`NUM_SLOTS-1:0]              STB_O_array;
+   logic [`NUM_SLOTS-1:0]              WE_O_array;
+   logic [`REG_ADDR_WIDTH-1:0]         ADDR_O_array [`NUM_SLOTS-1:0];
+   logic [`DATA_WIDTH-1:0]             DAT_I_array [`NUM_SLOTS-1:0];
+   logic [`DATA_WIDTH-1:0]             DAT_O_array [`NUM_SLOTS-1:0];
+   logic [`NUM_SLOTS-1:0]              ACK_I_array;
 
    // body
    mmio_controller ctrl_unit
-     (.clk(clk),
-      .reset(reset),
-      .mmio_cs(mmio_cs),
-      .mmio_wr(mmio_wr),
-      .mmio_rd(mmio_rd),
-      .mmio_addr(mmio_addr),
-      .mmio_wr_data(mmio_wr_data),
-      .mmio_rd_data(mmio_rd_data),
-      // slot interface
-      .slot_cs_array(cs_array),
-      .slot_mem_rd_array(mem_rd_array),
-      .slot_mem_wr_array(mem_wr_array),
-      .slot_reg_addr_array(reg_addr_array),
-      .slot_rd_data_array(rd_data_array),
-      .slot_wr_data_array(wr_data_array)
+     (
+      // WISHBONE interface
+      .CLK_I(CLK_I),
+      .RST_I(RST_I),
+      .ADDR_I(ADDR_I),
+      .DAT_I(DAT_I),
+      .DAT_O(DAT_O),
+      .CYC_I(CYC_I),
+      .STB_I(STB_I),
+      .WE_I(WE_I),
+      .ACK_O(ACK_O),
+
+      // WISHBONE interface for slot
+      .CYC_O_array(CYC_O_array),
+      .STB_O_array(STB_O_array),
+      .WE_O_array(WE_O_array),
+      .ADDR_O_array(ADDR_O_array),
+      .DAT_I_array(DAT_I_array),
+      .DAT_O_array(DAT_O_array),
+      .ACK_I_array(ACK_I_array)
       );
 
    // slot 0: timer
    dev_timer timer_slot0
-     (.clk(clk),
-      .reset(reset),
-      .cs(cs_array[`S0_SYS_TIMER]),
-      .read(mem_rd_array[`S0_SYS_TIMER]),
-      .write(mem_wr_array[`S0_SYS_TIMER]),
-      .addr(reg_addr_array[`S0_SYS_TIMER]),
-      .rd_data(rd_data_array[`S0_SYS_TIMER]),
-      .wr_data(wr_data_array[`S0_SYS_TIMER])
+     (
+      .CLK_I(CLK_I),
+      .RST_I(RST_I),
+      .ADDR_I(ADDR_O_array[`S0_SYS_TIMER]),
+      .DAT_I(DAT_O_array[`S0_SYS_TIMER]),
+      .DAT_O(DAT_I_array[`S0_SYS_TIMER]),
+      .CYC_I(CYC_O_array[`S0_SYS_TIMER]),
+      .STB_I(STB_O_array[`S0_SYS_TIMER]),
+      .WE_I(WE_O_array[`S0_SYS_TIMER]),
+      .ACK_O(ACK_I_array[`S0_SYS_TIMER])
       );
 
    // slot 1: UART
    dev_uart uart_slot1
-     (.clk(clk),
-      .reset(reset),
-      .cs(cs_array[`S1_UART1]),
-      .read(mem_rd_array[`S1_UART1]),
-      .write(mem_wr_array[`S1_UART1]),
-      .addr(reg_addr_array[`S1_UART1]),
-      .rd_data(rd_data_array[`S1_UART1]),
-      .wr_data(wr_data_array[`S1_UART1]),
+     (
+      .CLK_I(CLK_I),
+      .RST_I(RST_I),
+      .ADDR_I(ADDR_O_array[`S1_UART1]),
+      .DAT_I(DAT_O_array[`S1_UART1]),
+      .DAT_O(DAT_I_array[`S1_UART1]),
+      .CYC_I(CYC_O_array[`S1_UART1]),
+      .STB_I(STB_O_array[`S1_UART1]),
+      .WE_I(WE_O_array[`S1_UART1]),
+      .ACK_O(ACK_I_array[`S1_UART1]),
       .tx(tx),
       .rx(rx)
       );
 
    // slot 2: GPO
    dev_gpo #(.W(N_LED)) gpo_slot2
-     (.clk(clk),
-      .reset(reset),
-      .cs(cs_array[`S2_LED]),
-      .read(mem_rd_array[`S2_LED]),
-      .write(mem_wr_array[`S2_LED]),
-      .addr(reg_addr_array[`S2_LED]),
-      .rd_data(rd_data_array[`S2_LED]),
-      .wr_data(wr_data_array[`S2_LED]),
+     (
+      .CLK_I(CLK_I),
+      .RST_I(RST_I),
+      .ADDR_I(ADDR_O_array[`S2_LED]),
+      .DAT_I(DAT_O_array[`S2_LED]),
+      .DAT_O(DAT_I_array[`S2_LED]),
+      .CYC_I(CYC_O_array[`S2_LED]),
+      .STB_I(STB_O_array[`S2_LED]),
+      .WE_I(WE_O_array[`S2_LED]),
+      .ACK_O(ACK_I_array[`S2_LED]),
       .dout(led)
       );
-   
-   // assign 0's to all unused slot rd_data signals
+
+   // assign default value to unused slot signals
    generate
       genvar                 i;
 
-      for (i = 3; i < 64; i = i + 1)
+      for (i = 3; i < `NUM_SLOTS; i = i + 1)
         begin: unused_slot_gen
-           assign rd_data_array[i] = 32'hffffffff;
+           assign DAT_I_array[i] = 32'h0000_0000;
+           assign ACK_I_array[i] = 1'b1;
         end
       endgenerate
 
-endmodule // mmio_sys
+endmodule: mmio_sys
+
+`end_keywords

@@ -4,46 +4,69 @@
  *
  * Origin from FPGA Prototyping by SystemVerilog Examples - Pong P. Chu
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
+`include "io_map.svh"
+
 module dev_uart
-  #(parameter FIFO_DEPTH_BIT = 8)
+  import vanilla_pkg::*;
+   #(parameter FIFO_DEPTH_BIT = 8)
    (
-    input logic clk,
-    input logic reset,
-    // slot interface
-    input logic cs,
-    input logic read,
-    input logic write,
-    input logic [4:0] addr,
-    input logic [31:0] wr_data,
-    output logic [31:0] rd_data,
-    output logic tx,
-    input logic rx
+    // WISHBONE interface
+    input logic                       CLK_I,
+    input logic                       RST_I,
+    input logic [`REG_ADDR_WIDTH-1:0] ADDR_I,
+    input logic [`DATA_WIDTH-1:0]     DAT_I,
+    output logic [`DATA_WIDTH-1:0]    DAT_O,
+    input logic                       CYC_I,
+    input logic                       STB_I,
+    input logic                       WE_I,
+    output logic                      ACK_O,
+
+    // external IO
+    output logic                      tx,
+    input logic                       rx
     );
 
    // signal declaration
-   logic        wr_uart, rd_uart, wr_dvsr;
-   logic        tx_full, rx_empty;
-   logic [10:0] dvsr_reg;
-   logic [7:0]  r_data;
-   logic        ctrl_reg;
+   logic                rd_en, wr_en;
+   logic                wr_uart, rd_uart, wr_dvsr;
+   logic                tx_full, rx_empty;
+   logic [10:0]         dvsr_reg;
+   logic [7:0]          r_data;
+   logic                ack_reg;
 
    // body
    uart #(.DBIT(8), .SB_TICK(16), .FIFO_W(FIFO_DEPTH_BIT)) uart_unit
-     (.*, .dvsr(dvsr_reg), .w_data(wr_data[7:0]));
+     (.*, .clk(CLK_I), .reset(RST_I), .dvsr(dvsr_reg), .w_data(DAT_I[7:0]));
 
    // dvsr register
-   always_ff @(posedge clk, posedge reset)
-     if (reset)
-       dvsr_reg <= 0;
+   always_ff @(posedge CLK_I, posedge RST_I)
+     if (RST_I)
+       begin
+          dvsr_reg <= 0;
+          ack_reg <= 0;
+       end
      else
-       if (wr_dvsr)
-         dvsr_reg <= wr_data[10:0];
+       begin
+          if (wr_dvsr)
+            dvsr_reg <= DAT_I[10:0];
+
+          ack_reg <= CYC_I && STB_I;
+       end
 
    // decoding logic. addr 하위 2 bit 사용
-   assign wr_dvsr = (write && cs && (addr[1:0] == 2'b01));
-   assign wr_uart = (write && cs && (addr[1:0] == 2'b10));
-   assign rd_uart = (write && cs && (addr[1:0] == 2'b11));
+   assign rd_en = CYC_I && STB_I && !WE_I;
+   assign wr_en = CYC_I && STB_I && WE_I;
+   assign wr_dvsr = (wr_en && (ADDR_I[1:0] == 2'b01));
+   assign wr_uart = (wr_en && (ADDR_I[1:0] == 2'b10));
+   assign rd_uart = (wr_en && (ADDR_I[1:0] == 2'b11));
 
    // slot read interface. 하위 10 bit만 사용
-   assign rd_data = {22'h000000, tx_full, rx_empty, r_data};
-endmodule // dev_uart
+   assign DAT_O = {22'h000000, tx_full, rx_empty, r_data};
+   assign ACK_O = ack_reg;
+
+endmodule: dev_uart
+
+`end_keywords

@@ -4,14 +4,17 @@
  *
  * Origin from FPGA Prototyping by SystemVerilog Examples - Pong P. Chu
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module fifo_ctrl
   #(
     parameter ADDR_WIDTH = 4 // number of address bits
     )
    (
-    input logic clk, reset,
-    input logic rd, wr,
-    output logic empty, full,
+    input logic                   clk, reset,
+    input logic                   rd, wr,
+    output logic                  empty, full,
     output logic [ADDR_WIDTH-1:0] w_addr,
     output logic [ADDR_WIDTH-1:0] r_addr
     );
@@ -83,4 +86,7 @@ module fifo_ctrl
    assign r_addr = r_ptr_logic;
    assign full = full_logic;
    assign empty = empty_logic;
-endmodule // fifo_ctrl
+
+endmodule: fifo_ctrl
+
+`end_keywords

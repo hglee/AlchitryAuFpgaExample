@@ -6,6 +6,9 @@
  *
  * 이전 FIFO buffer 구현 사용
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module uart
   #(
     parameter DBIT = 8, // data bits
@@ -44,4 +47,7 @@ module uart
       .empty(tx_empty), .full(tx_full), .r_data(tx_fifo_out));
 
    assign tx_fifo_not_empty = ~tx_empty;
-endmodule // uart
+
+endmodule: uart
+
+`end_keywords

@@ -13,45 +13,51 @@
  *  - Enable I/O ports
  *  - Deselect all other I/O peripherals
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
+`include "io_map.svh"
+
 module mcs_top
+  import vanilla_pkg::*;
   #(parameter BRG_BASE = 32'hc000_0000)
    (
-    input logic clk,
-    input logic reset_n,
+    input logic        clk,
+    input logic        reset_n,
     // LED
     output logic [7:0] led,
     // uart
-    input logic rx,
-    output logic tx
+    input logic        rx,
+    output logic       tx
     );
 
    // declaration
-   logic         clk_100M;
-   logic         reset_sys;
+   logic                reset_sys;
    // MCS IO bus
-   logic         io_addr_strobe;
-   logic         io_read_strobe;
-   logic         io_write_strobe;
-   logic [3:0]   io_byte_enable;
-   logic [31:0]  io_address;
-   logic [31:0]  io_write_data;
-   logic [31:0]  io_read_data;
-   logic         io_ready;
-   // FPro bus
-   logic         fp_mmio_cs;
-   logic         fp_wr;
-   logic         fp_rd;
-   logic [20:0]  fp_addr;
-   logic [31:0]  fp_wr_data;
-   logic [31:0]  fp_rd_data;
+   logic                io_addr_strobe;
+   logic                io_read_strobe;
+   logic                io_write_strobe;
+   logic [3:0]          io_byte_enable;
+   logic [`CPU_ADDR_WIDTH-1:0] io_address;
+   logic [`DATA_WIDTH-1:0]     io_write_data;
+   logic [`DATA_WIDTH-1:0]     io_read_data;
+   logic                       io_ready;
+
+   // WISHBONE interface
+   logic                        CYC_O;
+   logic                        STB_O;
+   logic                        WE_O;
+   logic [`MMIO_ADDR_WIDTH-1:0] ADDR_O;
+   logic [`DATA_WIDTH-1:0]      DAT_O;
+   logic [`DATA_WIDTH-1:0]      DAT_I;
+   logic                        ACK_I;
 
    // body
-   assign clk_100M = clk; // 100 MHz external clock
    assign reset_sys = !reset_n;
 
    // instantiate Microblaze MCS
    cpu cpu_unit (
-                 .Clk(clk_100M),
+                 .Clk(clk),
                  .Reset(reset_sys),
                  .IO_addr_strobe(io_addr_strobe),
                  .IO_address(io_address),
@@ -64,21 +70,24 @@ module mcs_top
                  );
 
    // instantiate bridge
-   mcs_bridge #(.BRG_BASE(BRG_BASE)) bridge_unit (.*, .fp_video_cs());
+   mcs_bridge #(.BRG_BASE(BRG_BASE)) bridge_unit (.*);
 
    // instantiate I/O subsystem
    mmio_sys #(.N_LED(8)) mmio_unit (
-                                    .clk(clk),
-                                    .reset(reset_sys),
-                                    .mmio_cs(fp_mmio_cs),
-                                    .mmio_wr(fp_wr),
-                                    .mmio_rd(fp_rd),
-                                    .mmio_addr(fp_addr),
-                                    .mmio_wr_data(fp_wr_data),
-                                    .mmio_rd_data(fp_rd_data),
+                                    .CLK_I(clk),
+                                    .RST_I(reset_sys),
+                                    .ADDR_I(ADDR_O),
+                                    .DAT_I(DAT_O),
+                                    .DAT_O(DAT_I),
+                                    .CYC_I(CYC_O),
+                                    .STB_I(STB_O),
+                                    .WE_I(WE_O),
+                                    .ACK_O(ACK_I),
                                     .led(led),
                                     .rx(rx),
                                     .tx(tx)
                                     );
 
-endmodule // mcs_top
+endmodule: mcs_top
+
+`end_keywords

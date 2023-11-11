@@ -4,6 +4,9 @@
  *
  * Origin from FPGA Prototyping by SystemVerilog Examples - Pong P. Chu
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module uart_rx
   #(
     parameter DBIT = 8, // data bits
@@ -17,13 +20,13 @@ module uart_rx
     );
 
    // fsm state
-   typedef enum        {idle, start, data, stop} state_type;
+   typedef enum logic [1:0] {idle, start, data, stop} state_type;
 
    // signal declare
    state_type state_reg, state_next;
-   logic [3:0]         s_reg, s_next;
-   logic [2:0]         n_reg, n_next;
-   logic [7:0]         b_reg, b_next;
+   logic [3:0]  s_reg, s_next;
+   logic [2:0]  n_reg, n_next;
+   logic [7:0]  b_reg, b_next;
 
    // body
    // FSMD state & data register
@@ -92,4 +95,7 @@ module uart_rx
      end // always_comb
    // output
    assign dout = b_reg;
-endmodule // uart_rx
+
+endmodule: uart_rx
+
+`end_keywords

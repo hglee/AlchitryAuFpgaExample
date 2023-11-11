@@ -17,4 +17,6 @@ ${XILINX_VITIS}/bin/xsct ./dist_vitis.tcl
 
 ${XILINX_VIVADO}/bin/vivado -mode tcl -source ./dist2.tcl
 
-cp ./build/au_sample_uart.runs/impl_1/mcs_top.bin .
+cp ./build_workspace/test_uart/Release/test_uart.elf ./bin/
+cp ./build/mcs_top.xsa ./bin/
+cp ./build/au_sample_uart.runs/impl_1/mcs_top.bin ./bin/

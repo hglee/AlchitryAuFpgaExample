@@ -4,16 +4,19 @@
  *
  * Origin from FPGA Prototyping by SystemVerilog Examples - Pong P. Chu
  */
+`begin_keywords "1800-2017"
+`timescale 1ns/1ps
+
 module fifo
   #(
     parameter DATA_WIDTH = 8, // number of bits in a word
     ADDR_WIDTH = 4 // number of address bits
     )
    (
-    input logic clk, reset,
-    input logic rd, wr,
-    input logic [DATA_WIDTH-1:0] w_data,
-    output logic empty, full,
+    input logic                   clk, reset,
+    input logic                   rd, wr,
+    input logic [DATA_WIDTH-1:0]  w_data,
+    output logic                  empty, full,
     output logic [DATA_WIDTH-1:0] r_data
     );
 
@@ -32,4 +35,6 @@ module fifo
    // instantiate register file
    reg_file #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) f_unit (.*);
 
-endmodule // fifo
+endmodule: fifo
+
+`end_keywords
