@@ -95,7 +95,7 @@ Done.
 
 ## Test
 
-You can use [FtClient](../FtClient/README.md) to test.
+You can use 'TestRead' program in [FtClient](../FtClient/README.md) to test.
 
 If you want to use FTDI example, follow belows.
 
