@@ -36,4 +36,17 @@ Number of devices: 1
 
 ## Write Test
 
-'TestWrite' program sends data to FT600.
+'TestWrite' program sends data to FT600. Run 'TestWrite' program to send to FT600.
+
+```
+sudo ./TestWrite
+```
+
+You can see TX transfer rate if it works properly like this (on ThinkPad T540p, Ubuntu 22.04):
+
+```
+Number of devices: 1
+188.40 (MB/s) - 188416000 bytes in 1000099 (us)
+186.73 (MB/s) - 186744832 bytes in 1000101 (us)
+186.72 (MB/s) - 186744832 bytes in 1000139 (us)
+```

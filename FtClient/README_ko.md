@@ -36,4 +36,13 @@ Number of devices: 1
 
 ## 쓰기 테스트
 
-'TestWrite' 프로그램은 FT600으로 데이터를 보냅니다.
+'TestWrite' 프로그램은 FT600으로 데이터를 보냅니다. FT600으로 데이터를 보내기 위해서 'TestWrite' 프로그램을 실행합니다.
+
+정상적으로 동작하는 경우 다음과 같이 TX 전송율을 확인할 수 있습니다 (ThinkPad T540p, Ubuntu 22.04 기준):
+
+```
+Number of devices: 1
+188.40 (MB/s) - 188416000 bytes in 1000099 (us)
+186.73 (MB/s) - 186744832 bytes in 1000101 (us)
+186.72 (MB/s) - 186744832 bytes in 1000139 (us)
+```
