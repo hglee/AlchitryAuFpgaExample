@@ -28,7 +28,7 @@ If you want just UART tx without MCS, you can use source under `hdl_without_msc`
 
 You need to select part 'xc7a35tftg256-1'.
 
-![Parts](docs/01_part.png)
+![Parts](../docs/part.png)
 
 2. Add Microblaze MCS IP
 
@@ -60,7 +60,7 @@ You need generate bin file to upload.
 
 Right click on 'Implementation' and enable 'bin_file' in 'write_bitstream' section.
 
-![bin file option](docs/02_imple.png)
+![bin file option](../docs/imple.png)
 
 6. Generate Bitstream
 

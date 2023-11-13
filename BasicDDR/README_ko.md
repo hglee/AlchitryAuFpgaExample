@@ -36,7 +36,7 @@ DDR 인터페이스를 설정하는 예제입니다.
 
 프로젝트 생성 시 part를 `xc7a35tftg256-1` 로 선택합니다.
 
-![Parts](docs/03_part.png)
+![Parts](../docs/part.png)
 
 2. Memory Interface Generator IP 추가
 
@@ -212,7 +212,7 @@ clk_ref_i의 경우 고정 200 MHz 출력이 필요하고, sys_clk_i 의 경우 
 
 `Implementation` 에서 우클릭 후 `write_bitstream` 부분의 `bin_file` 을 활성화합니다.
 
-![bin file option](docs/04_imple.png)
+![bin file option](../docs/imple.png)
 
 6. 비트스트림 생성
 

@@ -36,7 +36,7 @@ Intro project to DDR interface setting.
 
 You need to select part `xc7a35tftg256-1`.
 
-![Parts](docs/03_part.png)
+![Parts](../docs/part.png)
 
 2. Add Memory Interface Generator IP
 
@@ -209,7 +209,7 @@ You need generate bin file to upload.
 
 Right click on `Implementation` and enable `bin_file` in `write_bitstream` section.
 
-![bin file option](docs/04_imple.png)
+![bin file option](../docs/imple.png)
 
 6. Generate Bitstream
 
