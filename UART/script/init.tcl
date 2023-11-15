@@ -1,7 +1,9 @@
-create_project -force au_sample_uart ./build -part xc7a35tftg256-1
+set src_dir $::env(SRC_DIR)
 
-add_files ./hdl
-add_files -fileset constrs_1 ./constraint/
+create_project -force au_sample_uart $src_dir/project -part xc7a35tftg256-1
+
+add_files $src_dir/hdl
+add_files -fileset constrs_1 $src_dir/constraint/
 
 set_property STEPS.WRITE_BITSTREAM.ARGS.BIN_FILE true [get_runs impl_1]
 
@@ -12,9 +14,4 @@ set_property CONFIG.USE_IO_BUS true [get_ips cpu]
 generate_target all [get_files cpu.xci]
 export_ip_user_files -of_objects [get_files cpu.xci] -no_script -sync -force
 
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_runs impl_1
-
-write_hw_platform -fixed -include_bit -force -file ./build/mcs_top.xsa
-
-quit
+start_gui

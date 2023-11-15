@@ -1,15 +1,18 @@
+import os
 import vitis
 
 # Initialization script for Vitis 2023.2
-ws_path = './build_workspace'
+src_dir = os.environ['SRC_DIR']
+
+ws_path = f'{src_dir}/_build_workspace'
 platform_name = 'platform_mcs'
-hw_xsa = './build/mcs_top.xsa'
+hw_xsa = f'{src_dir}/_build/mcs_top.xsa'
 hw_os = 'standalone'
 hw_cpu = 'microblaze_I'
 app_name = 'test_uart'
 platform_path = f'{ws_path}/{platform_name}/export/{platform_name}/{platform_name}.xpfm'
 platform_domain = 'standalone_microblaze_I'
-src_loc = './sw'
+src_loc = f'{src_dir}/sw'
 
 client = vitis.create_client(workspace = ws_path)
 
@@ -24,3 +27,5 @@ app.set_app_config(key = "USER_LINK_OTHER_FLAGS", values = "-s")
 app.build(target = 'hw')
 
 client.close()
+
+vitis.dispose()

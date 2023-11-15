@@ -1,15 +1,18 @@
+import os
 import vitis
 
 # Initialization script for Vitis 2023.2
-ws_path = './vitis_workspace'
+src_dir = os.environ['SRC_DIR']
+
+ws_path = f'{src_dir}/vitis_workspace'
 platform_name = 'platform_mcs'
-hw_xsa = './project/mcs_top.xsa'
+hw_xsa = f'{src_dir}/project/mcs_top.xsa'
 hw_os = 'standalone'
 hw_cpu = 'microblaze_I'
 app_name = 'test_uart'
 platform_path = f'{ws_path}/{platform_name}/export/{platform_name}/{platform_name}.xpfm'
 platform_domain = 'standalone_microblaze_I'
-src_loc = './sw'
+src_loc = f'{src_dir}/sw'
 
 client = vitis.create_client(workspace = ws_path)
 
@@ -20,3 +23,5 @@ app = client.create_app_component(name = app_name, platform = platform_path, dom
 app.import_files(from_loc = src_loc, dest_dir_in_cmp = 'src')
 
 client.close()
+
+vitis.dispose()
