@@ -70,6 +70,8 @@ Select 'Export Hardware' under 'File > Export' and select 'Include bitstream'.
 
 ## Create Vitis Project and Build
 
+### Vitis 2023.1
+
 0. Create project using script.
 
 You can create project using init_vitis.sh script.

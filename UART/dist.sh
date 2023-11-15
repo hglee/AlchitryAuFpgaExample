@@ -13,6 +13,7 @@ rm -rf ./build_workspace
 
 ${XILINX_VIVADO}/bin/vivado -mode tcl -source ./dist.tcl
 
+# For Vivado 2023.2, you need to use classic mode or new style script.
 ${XILINX_VITIS}/bin/xsct ./dist_vitis.tcl
 
 ${XILINX_VIVADO}/bin/vivado -mode tcl -source ./dist2.tcl
