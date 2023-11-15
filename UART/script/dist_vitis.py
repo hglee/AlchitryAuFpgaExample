@@ -16,13 +16,15 @@ src_loc = f'{src_dir}/sw'
 
 client = vitis.create_client(workspace = ws_path)
 
+# xiltimer added by default and need for empty application template
 platform = client.create_platform_component(name = platform_name, hw = hw_xsa, os = hw_os, cpu = hw_cpu)
 platform.build()
 
 app = client.create_app_component(name = app_name, platform = platform_path, domain = platform_domain)
 app.import_files(from_loc = src_loc, dest_dir_in_cmp = 'src')
 app.set_app_config(key = "USER_COMPILE_OPTIMIZATION_LEVEL", values = "-Os")
-app.set_app_config(key = "USER_COMPILE_DEBUG_LEVEL", values = "-g0")
+app.set_app_config(key = "USER_COMPILE_OPTIMIZATION_OTHER_FLAGS", values = "-DNDEBUG")
+app.set_app_config(key = "USER_COMPILE_DEBUG_LEVEL", values = "")
 app.set_app_config(key = "USER_LINK_OTHER_FLAGS", values = "-s")
 app.build(target = 'hw')
 
