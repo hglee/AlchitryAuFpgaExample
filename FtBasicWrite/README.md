@@ -16,9 +16,9 @@ Generate 16 bit sequence number and transfer to PC.
 
 0. Create project using script.
 
-You can create project using init.sh script.
+You can create project using [init.sh](script/init.sh) script.
 
-Edit install path (XILINX_VIVADO) in init.sh then run if you want.
+Edit install path (XILINX_VIVADO) in [init.sh](script/init.sh) then run if you want.
 
 You can skip step 1 ~ 4 if you created project by script.
 

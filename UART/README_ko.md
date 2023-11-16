@@ -16,9 +16,9 @@ USB UART를 통하여 PC에 메시지를 전송하는 예제입니다.
 
 0. 스크립트로 프로젝트 생성하기
 
-`init.sh` 스크립트를 실행하여 프로젝트를 생성할 수 있습니다.
+[init.sh](script/init.sh) 스크립트를 실행하여 프로젝트를 생성할 수 있습니다.
 
-필요한 경우 `init.sh` 스크립트 안에 설치 경로 (XILINX_VIVADO)를 수정하여 실행합니다.
+필요한 경우 [init.sh](script/init.sh) 스크립트 안에 설치 경로 (XILINX_VIVADO)를 수정하여 실행합니다.
 
 스크립트로 프로젝트를 생성한 경우 1 ~ 5 단계 과정을 생략할 수 있습니다.
 
@@ -74,9 +74,9 @@ MCS 를 사용하지 않고 단순 UART tx만 사용하려는 경우 `hdl_withou
 
 0. 스크립트로 프로젝트 생성하기
 
-`init_vitis.sh` 스크립트를 실행하여 프로젝트를 생성할 수 있습니다.
+[init_vitis.sh](script/init_vitis.sh) 스크립트를 실행하여 프로젝트를 생성할 수 있습니다.
 
-필요한 경우 `init_vitis.sh` 스크립트 안에 설치 경로 (XILINX_VITIS)를 수정하여 실행합니다.
+필요한 경우 [init_vitis.sh](script/init_vitis.sh) 스크립트 안에 설치 경로 (XILINX_VITIS)를 수정하여 실행합니다.
 
 스크립트로 프로젝트를 생성한 경우 1 ~ 2 단계 과정을 생략할 수 있습니다.
 
@@ -101,6 +101,62 @@ MCS 를 사용하지 않고 단순 UART tx만 사용하려는 경우 `hdl_withou
 3. elf 파일 빌드
 
 빌드 후 생성된 elf 파일을 application project 폴더에서 찾을 수 있습니다.
+
+### Vitis 2023.2
+
+Vitis 2023.2에서 기본적으로 Vitis Unified IDE로 변경되었습니다. 기존 형식의 workspace를 사용하려면 클래식 모드를 사용하여야 합니다.
+
+다음 단계에서는 새 형식의 workspace를 생성하도록 하겠습니다.
+
+0. 스크립트로 프로젝트 생성하기
+
+[init_vitis_2023_2.sh](script/init_vitis_2023_2.sh) 스크립트를 실행하여 프로젝트를 생성할 수 있습니다.
+
+필요한 경우 [init_vitis_2023_2.sh](script/init_vitis_2023_2.sh) 스크립트 안에 설치 경로 (XILINX_VITIS)를 수정하여 실행합니다.
+
+스크립트로 프로젝트를 생성한 경우 1 ~ 4 단계 과정을 생략할 수 있습니다.
+
+1. Vitis 에서 새 Platform Component 생성
+
+- `File` 메뉴에서 `Open Workspace` 를 선택하여 대상 workspace를 선택합니다.
+- `File > New Component` 하위의 `Platform` 을 선택합니다.
+- `Component name` 을 입력합니다. (platform_mcs)
+- `Hardware Design` 을 선택하고 이전 단계에서 내보낸 hardward를 선택합니다 (mcs_top.xsa)
+- OS에는 `standalone` 을 processor 에는 `microblaze_I` 를 선택합니다.
+
+![Name and Location](docs/07_APP_platform_01.png)
+![Flow](docs/07_APP_platform_02.png)
+![Os and Processor](docs/07_APP_platform_03.png)
+
+2. Vitis 에서 새 Application Component 생성
+
+- `File > New Component` 하위의 `Application` 을 선택합니다.
+- `Component name` 을 입력합니다. (test_uart)
+- 이전 단계에서 생성한 platform 을 선택합니다. (platform_mcs)
+- domain에는 기본적으로 `standalone_microblaze_I` 를 선택합니다.
+
+![Name and Location](docs/07_APP_app_01.png)
+![Hardware](docs/07_APP_app_02.png)
+![Domain](docs/07_APP_app_03.png)
+
+3. 프로젝트에 소스 파일 가져오기
+
+Application component의 `Source > src` 에서 우클릭하여 `sw` 디렉토리의 모든 파일을 가져옵니다.
+
+상위 폴더인 `Sources` 로 가져오지 않도록 주의합니다.
+
+![Import](docs/07_APP_import_01.png)
+
+4. elf 파일 빌드
+
+![FLOW](docs/07_APP_flow.png)
+
+`FLOW` 탭 하위의 항목을 사용하여 빌드할 수 있습니다.
+
+대상 platform component (platform_mcs)을 선택하고 빌드합니다. 이후 application component (test_uart)을 선택하고 빌드하여 elf file을 생성합니다.
+
+생성된 elf 파일은 application project 하위의 build 폴더에서 찾을 수 있습니다.
+
 
 ## Merge된 bit 파일 생성
 

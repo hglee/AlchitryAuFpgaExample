@@ -16,9 +16,9 @@ Send message to PC by USB UART.
 
 0. Create project using script.
 
-You can create project using init.sh script.
+You can create project using [init.sh](script/init.sh) script.
 
-Edit install path (XILINX_VIVADO) in init.sh then run if you want.
+Edit install path (XILINX_VIVADO) in [init.sh](script/init.sh) then run if you want.
 
 You can skip step 1 ~ 5 if you created project by script.
 
@@ -26,13 +26,13 @@ If you want just UART tx without MCS, you can use source under `hdl_without_msc`
 
 1. Create new RTL project in Vivado.
 
-You need to select part 'xc7a35tftg256-1'.
+You need to select part `xc7a35tftg256-1`.
 
 ![Parts](../docs/part.png)
 
 2. Add Microblaze MCS IP
 
-Select 'IP Catalog' under project, search and open 'Microblaze MCS'.
+Select `IP Catalog` under project, search and open `Microblaze MCS`.
 
 ![IP Catalog](docs/03_IP.png)
 
@@ -54,11 +54,11 @@ Add alchitry.xdc in constraint directory to project.
 
 Add hdl directory to project.
 
-5. Set 'bin_file' option to implementation.
+5. Set `bin_file` option to implementation.
 
 You need generate bin file to upload.
 
-Right click on 'Implementation' and enable 'bin_file' in 'write_bitstream' section.
+Right click on `Implementation` and enable `bin_file` in `write_bitstream` section.
 
 ![bin file option](../docs/imple.png)
 
@@ -66,7 +66,7 @@ Right click on 'Implementation' and enable 'bin_file' in 'write_bitstream' secti
 
 7. Export hardware
 
-Select 'Export Hardware' under 'File > Export' and select 'Include bitstream'.
+Select `Export Hardware` under `File > Export` and select `Include bitstream`.
 
 ## Create Vitis Project and Build
 
@@ -74,20 +74,20 @@ Select 'Export Hardware' under 'File > Export' and select 'Include bitstream'.
 
 0. Create project using script.
 
-You can create project using init_vitis.sh script.
+You can create project using [init_vitis.sh](script/init_vitis.sh) script.
 
-Edit install path (XILINX_VITIS) in init_vitis.sh then run if you want.
+Edit install path (XILINX_VITIS) in [init_vitis.sh](script/init_vitis.sh) then run if you want.
 
 You can skip step 1 ~ 2 if you created project by script.
 
 1. Create new Application project in Vitis.
 
-Run 'Vitis', not 'Vitis HLS'. If you cannot find 'Vitis', you need to install it.
+Run `Vitis`, not `Vitis HLS`. If you cannot find `Vitis`, you need to install it.
 
-- In 'Create a new platform hardware(XSA)', select exported hardward previous step (mcs_top.xsa).
+- In `Create a new platform hardware(XSA)`, select exported hardward previous step (mcs_top.xsa).
 - Enter your application project name in next step.
-- Set OS to 'standalone'
-- Use 'Empty Application(C++) template'
+- Set OS to `standalone`
+- Use `Empty Application(C++) template`
 
 ![App Project 1](docs/05_App_01.png)
 ![App Project 2](docs/05_App_02.png)
@@ -102,18 +102,73 @@ Import all source files in sw directory to project.
 
 You can find generated elf file under application project folder.
 
+### Vitis 2023.2
+
+In Vitis 2023.2, Vitis changed to Vitis Unified IDE by default. If you want to use the old-style workspace, you need to use classic mode.
+
+You can create a new style workspace by following steps.
+
+0. Create project using script.
+
+You can create project using [init_vitis_2023_2.sh](script/init_vitis_2023_2.sh) script.
+
+Edit install path (XILINX_VITIS) in [init_vitis_2023_2.sh](script/init_vitis_2023_2.sh) then run if you want.
+
+You can skip step 1 ~ 4 if you created project by script.
+
+1. Create new Platform Component in Vitis.
+
+- Select `Open Workspace` under `File` menu
+- Select `Platform` under `File > New Component` menu.
+- Enter `Component name` (platform_mcs)
+- Select `Hardware Design` and select exported hardware previous step (mcs_top.xsa)
+- Select `standalone` OS and `microblaze_I` processor.
+
+![Name and Location](docs/07_APP_platform_01.png)
+![Flow](docs/07_APP_platform_02.png)
+![Os and Processor](docs/07_APP_platform_03.png)
+
+2. Create new Application Component in Vitis.
+
+- Select `Application` under `File > New Component` menu.
+- Enter `Component name`
+- Select created platform in previous step (platform_mcs)
+- Select `standalone_microblaze_I` domain
+
+![Name and Location](docs/07_APP_app_01.png)
+![Hardware](docs/07_APP_app_02.png)
+![Domain](docs/07_APP_app_03.png)
+
+3. Import source files to project.
+
+Right click on `Sources > src` on applcation component and import all source files in sw directory to project.
+
+Be careful not to import to upper level `Sources` folder.
+
+![Import](docs/07_APP_import_01.png)
+
+4. Build elf file.
+
+![FLOW](docs/07_APP_flow.png)
+
+You can build on below `FLOW` tab.
+
+Select platform component (platform_mcs) and build it. And select applcation component (test_uart) and build elf file.
+
+You can find generated elf file under build folder in application project.
+
 ## Generate Merged Bit File
 
 1. Switch to Vivado and set generated elf file to bitstream.
 
-Select project and open 'Tools > Associate ELF files' and set generated elf file to 'Design Sources > cpu'.
+Select project and open `Tools > Associate ELF files` and set generated elf file to `Design Sources > cpu`.
 
 ![Elf 1](docs/06_Elf_01.png)
 ![Elf 2](docs/06_Elf_02.png)
 
 2. Generate bitstream again.
 
-After generate, you can find 'mcs_top.bin' file under project folder.
+After generate, you can find `mcs_top.bin` file under project folder.
 
 ## Upload
 
