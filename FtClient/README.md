@@ -18,13 +18,13 @@ make
 
 ## Read Test
 
-'TestRead' program receives data from FT600. Run 'TestRead' program to receive from FT600.
+The 'TestRead' program receives data from the FT600. To receive from FT600, run the 'TestRead' program.
 
 ```
 sudo ./TestRead
 ```
 
-You can see RX transfer rate if it works properly like this (on ThinkPad T540p, Ubuntu 22.04):
+You can check the RX transfer rate if it works properly as follows (on ThinkPad T540p, Ubuntu 22.04):
 
 ```
 Number of devices: 1
@@ -36,13 +36,13 @@ Number of devices: 1
 
 ## Write Test
 
-'TestWrite' program sends data to FT600. Run 'TestWrite' program to send to FT600.
+The 'TestWrite' program sends data to the FT600. To send to FT600, run the 'TestWrite' program.
 
 ```
 sudo ./TestWrite
 ```
 
-You can see TX transfer rate if it works properly like this (on ThinkPad T540p, Ubuntu 22.04):
+You can check the TX transfer rate if it works properly as follows (on ThinkPad T540p, Ubuntu 22.04):
 
 ```
 Number of devices: 1

@@ -14,13 +14,13 @@ dotnet build -c Release
 
 ## Read Test
 
-'TestRead' program receives data from FT600. Run 'TestRead' program to receive from FT600. Besure to copy dynamic library (.so or .dll) to build directory.
+The 'TestRead' program receives data from the FT600. To receive from FT600, run the 'TestRead' program. You will need to copy the dynamic library (.so or .dll) into build directory.
 
 ```
 sudo dotnet run --project TestRead -c Release
 ```
 
-You can see RX transfer rate if it works properly like this (on ThinkPad T540p, Ubuntu 22.04):
+You can check the RX transfer rate if it works properly as follows (on ThinkPad T540p, Ubuntu 22.04):
 
 ```
 Number of devices: 1
@@ -32,13 +32,13 @@ Flags: 4, Type: 258, ID: 403601E, SerialNumber: 000000000001, Description: FTDI 
 
 ## Write Test
 
-'TestWrite' program sends data to FT600. Run 'TestWrite' program to send to FT600. Besure to copy dynamic library (.so or .dll) to build directory.
+The 'TestWrite' program sends data to the FT600. To send to FT600, run the 'TestWrite' program. You will need to copy the dynamic library (.so or .dll) into build directory.
 
 ```
 sudo dotnet run --project TestWrite -c Release
 ```
 
-You can see TX transfer rate if it works properly like this (on ThinkPad T540p, Ubuntu 22.04):
+You can check the TX transfer rate if it works properly as follows (on ThinkPad T540p, Ubuntu 22.04):
 
 ```
 Number of devices: 1
