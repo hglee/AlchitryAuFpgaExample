@@ -5,8 +5,8 @@ USB UART를 통하여 PC에 메시지를 전송하는 예제입니다.
 ## 대상
 ### 소프트웨어
 
-* Xilinx Vivado 2023.1
-* Xilinx Vitis 2023.1
+* Xilinx Vivado 2023.1, 2023.2
+* Xilinx Vitis 2023.1, 2023.2
 
 ### 하드웨어
 

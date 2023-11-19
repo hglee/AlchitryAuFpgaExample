@@ -5,8 +5,8 @@ Send message to PC by USB UART.
 ## Target
 ### Software
 
-* Xilinx Vivado 2023.1
-* Xilinx Vitis 2023.1
+* Xilinx Vivado 2023.1, 2023.2
+* Xilinx Vitis 2023.1, 2023.2
 
 ### Hardware
 
