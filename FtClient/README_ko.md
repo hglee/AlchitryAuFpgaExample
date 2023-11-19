@@ -38,6 +38,10 @@ Number of devices: 1
 
 'TestWrite' 프로그램은 FT600으로 데이터를 보냅니다. FT600으로 데이터를 보내기 위해서 'TestWrite' 프로그램을 실행합니다.
 
+```
+sudo ./TestWrite
+```
+
 정상적으로 동작하는 경우 다음과 같이 TX 전송율을 확인할 수 있습니다 (ThinkPad T540p, Ubuntu 22.04 기준):
 
 ```
