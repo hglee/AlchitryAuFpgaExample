@@ -11,10 +11,10 @@ public interface IFtd3xxPipe
     byte PipeId { get; }
 
     /// <summary>
-    /// Gets or sets to ignores read or write timeout.
+    /// Gets or sets to ignores read or write timeout exception.
     /// <para>Sets to false to raise exception on timeout.</para>
     /// </summary>
-    bool IgnoreTimeout { get; set; }
+    bool DoNotRaiseTimeoutException { get; set; }
 
     /// <summary>
     /// Sets stream pipe

@@ -139,14 +139,14 @@ public class Ftd3xxPipeLinux : IFtd3xxPipe
         this.timeoutMillisec = 1000;
 
         this.PipeId = pipeId;
-        this.IgnoreTimeout = false;
+        this.DoNotRaiseTimeoutException = false;
     }
 
     /// <inheritdoc />
     public byte PipeId { get; }
 
     /// <inheritdoc />
-    public bool IgnoreTimeout { get; set; }
+    public bool DoNotRaiseTimeoutException { get; set; }
 
     /// <inheritdoc />
     public void SetStreamPipe(uint streamSize)
@@ -260,7 +260,7 @@ public class Ftd3xxPipeLinux : IFtd3xxPipe
         var status = FT_ReadPipe(this.handle, this.PipeId, buffer, length, out readSize, this.timeoutMillisec).ToStatus();
         if (status == FtStatus.Timeout)
         {
-            if (!this.IgnoreTimeout)
+            if (!this.DoNotRaiseTimeoutException)
             {
                 throw new FtException("Timeout on ReadPipe", status);
             }
@@ -297,9 +297,9 @@ public class Ftd3xxPipeLinux : IFtd3xxPipe
         uint length = (uint)buffer.Length;
         uint writeSize;
         var status = FT_WritePipe(this.handle, this.PipeId, buffer, length, out writeSize, this.timeoutMillisec).ToStatus();
-        if (status == FtStatus.Timeout && !this.IgnoreTimeout)
+        if (status == FtStatus.Timeout)
         {
-            if (!this.IgnoreTimeout)
+            if (!this.DoNotRaiseTimeoutException)
             {
                 throw new FtException("Timeout on WritePipe", status);
             }

@@ -35,7 +35,7 @@ wrapper.Prepare();
 wrapper.Open(deviceIndex);
 
 var pipe = wrapper.MakeOutPipe(pipeId);
-pipe.IgnoreTimeout = true;
+pipe.DoNotRaiseTimeoutException = true;
 pipe.Prepare(streamSize, timeoutMs);
 
 var report = new StatisticsReport();
