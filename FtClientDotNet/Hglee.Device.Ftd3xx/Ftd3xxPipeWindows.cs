@@ -142,8 +142,16 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
     public bool DoNotRaiseTimeoutException { get; set; }
 
     /// <inheritdoc />
+    public bool Disposed { get; set; }
+
+    /// <inheritdoc />
     public void SetStreamPipe(uint streamSize)
     {
+        if (this.Disposed)
+        {
+            throw new ObjectDisposedException("handle");
+        }
+
         var status = FT_SetStreamPipe(this.handle, 0, 0, this.PipeId, streamSize).ToStatus();
         if (status != FtStatus.Ok)
         {
@@ -154,6 +162,11 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
     /// <inheritdoc />
     public void SetPipeTimeoutMs(uint timeoutMs)
     {
+        if (this.Disposed)
+        {
+            throw new ObjectDisposedException("handle");
+        }
+
         var status = FT_SetPipeTimeout(this.handle, this.PipeId, timeoutMs).ToStatus();
         if (status != FtStatus.Ok)
         {
@@ -164,6 +177,11 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
     /// <inheritdoc />
     public void AbortPipe()
     {
+        if (this.Disposed)
+        {
+            throw new ObjectDisposedException("handle");
+        }
+
         var status = FT_AbortPipe(this.handle, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
@@ -174,6 +192,11 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
     /// <inheritdoc />
     public void FlushPipe()
     {
+        if (this.Disposed)
+        {
+            throw new ObjectDisposedException("handle");
+        }
+
         var status = FT_FlushPipe(this.handle, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
@@ -184,6 +207,11 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
     /// <inheritdoc />
     public void ClearStreamPipe()
     {
+        if (this.Disposed)
+        {
+            throw new ObjectDisposedException("handle");
+        }
+
         var status = FT_ClearStreamPipe(this.handle, 0, 0, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
@@ -202,6 +230,11 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
     /// <inheritdoc />
     public void Clean()
     {
+        if (this.Disposed)
+        {
+            throw new ObjectDisposedException("handle");
+        }
+
         var exceptions = new List<Exception>();
 
         var status = FT_AbortPipe(this.handle, this.PipeId).ToStatus();
@@ -246,6 +279,11 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
             throw new FtException("Pipe is not IN pipe", FtStatus.OtherError);
         }
 
+        if (this.Disposed)
+        {
+            throw new ObjectDisposedException("handle");
+        }
+
         uint length = (uint) buffer.Length;
         uint readSize;
         var status = FT_ReadPipe(this.handle, this.PipeId, buffer, length, out readSize, IntPtr.Zero).ToStatus();
@@ -283,6 +321,11 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
         if (buffer.Length <= 0)
         {
             return 0;
+        }
+
+        if (this.Disposed)
+        {
+            throw new ObjectDisposedException("handle");
         }
 
         uint length = (uint)buffer.Length;

@@ -6,6 +6,11 @@
 public interface IFtd3xxWrapper : IDisposable
 {
     /// <summary>
+    /// Gets opened flag.
+    /// </summary>
+    bool IsOpened { get; }
+
+    /// <summary>
     /// Gets device list info node.
     /// </summary>
     /// <param name="timeout">Timeout on check.</param>

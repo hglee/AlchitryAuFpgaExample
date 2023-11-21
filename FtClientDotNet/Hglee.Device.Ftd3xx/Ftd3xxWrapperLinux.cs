@@ -5,6 +5,14 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// FTD3xx wrapper class for Linux
 /// </summary>
+/// <remarks>See native header for detail types (Types.h). Some examples,
+/// <list type='bullet'>
+/// <item>DWORD : unsigned int</item>
+/// <item>ULONG : unsigned int</item>
+/// <item>BOOL : unsigned int</item>
+/// <item>BOOLEAN : unsigned char</item>
+/// </list>
+/// </remarks>
 public class Ftd3xxWrapperLinux : IFtd3xxWrapper
 {
     /// <summary>
@@ -28,6 +36,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
 
     /// <summary>
     /// Sets transfer parameters for each FIFO channel.
+    /// <para>FT_STATUS FT_SetTransferParams(FT_TRANSFER_CONF *pConf, DWORD dwFifoID)</para>
     /// </summary>
     /// <param name="pConf">Transfer config.</param>
     /// <param name="dwFifoID">FIFO interface ID (0 ~ 3)</param>
@@ -88,10 +97,13 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
     }
 
     /// <inheritdoc />
+    public bool IsOpened => this.handle != IntPtr.Zero;
+
+    /// <inheritdoc />
     public IReadOnlyList<FT_DEVICE_LIST_INFO_NODE> GetDeviceInfoList(TimeSpan timeout)
     {
         var endTime = DateTime.Now + timeout;
-        uint numberOfDevices = 0;
+        uint numberOfDevices;
 
         while (true)
         {
@@ -103,6 +115,8 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
 
             if (DateTime.Now > endTime)
             {
+                numberOfDevices = 0;
+
                 break;
             }
 
@@ -145,7 +159,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
     /// <inheritdoc />
     public void Open(uint deviceIndex)
     {
-        if (this.handle != IntPtr.Zero)
+        if (this.IsOpened)
         {
             throw new FtException("Device already opened.", FtStatus.OtherError);
         }
@@ -171,7 +185,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
             throw new ArgumentOutOfRangeException(nameof(pipeId));
         }
 
-        if (this.handle == IntPtr.Zero)
+        if (!this.IsOpened)
         {
             throw new FtException("Device not opened.", FtStatus.OtherError);
         }
@@ -199,7 +213,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
             throw new ArgumentOutOfRangeException(nameof(pipeId));
         }
 
-        if (this.handle == IntPtr.Zero)
+        if (!this.IsOpened)
         {
             throw new FtException("Device not opened.", FtStatus.OtherError);
         }
@@ -267,7 +281,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
     /// <param name="raiseException">Raise exception on error</param>
     private void CloseImpl(bool raiseException)
     {
-        if (this.handle == IntPtr.Zero)
+        if (!this.IsOpened)
         {
             return;
         }
@@ -284,6 +298,10 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
             {
                 exceptions.Add(ex);
             }
+            finally
+            {
+                pipe.Disposed = true;
+            }
         }
 
         this.pipes.Clear();
@@ -296,7 +314,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
 
         this.handle = IntPtr.Zero;
 
-        if (raiseException)
+        if (raiseException && exceptions.Count > 0)
         {
             throw new AggregateException(exceptions);
         }

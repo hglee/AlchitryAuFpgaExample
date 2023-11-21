@@ -17,6 +17,12 @@ public interface IFtd3xxPipe
     bool DoNotRaiseTimeoutException { get; set; }
 
     /// <summary>
+    /// Gets disposed flag.
+    /// <para>Setter only for internal use.</para>
+    /// </summary>
+    bool Disposed { get; set; }
+
+    /// <summary>
     /// Sets stream pipe
     /// </summary>
     /// <param name="streamSize">Stream size in bytes.</param>

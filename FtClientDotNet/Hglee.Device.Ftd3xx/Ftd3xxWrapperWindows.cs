@@ -70,6 +70,9 @@ public class Ftd3xxWrapperWindows : IFtd3xxWrapper
         this.handle = IntPtr.Zero;
     }
 
+    /// <inheritdoc />
+    public bool IsOpened => this.handle != IntPtr.Zero;
+
     /// <summary>
     /// Finalizer
     /// </summary>
@@ -94,6 +97,8 @@ public class Ftd3xxWrapperWindows : IFtd3xxWrapper
 
             if (DateTime.Now > endTime)
             {
+                numberOfDevices = 0;
+
                 break;
             }
 
@@ -125,7 +130,7 @@ public class Ftd3xxWrapperWindows : IFtd3xxWrapper
     /// <inheritdoc />
     public void Open(uint deviceIndex)
     {
-        if (this.handle != IntPtr.Zero)
+        if (this.IsOpened)
         {
             throw new FtException("Device already opened.", FtStatus.OtherError);
         }
@@ -151,7 +156,7 @@ public class Ftd3xxWrapperWindows : IFtd3xxWrapper
             throw new ArgumentOutOfRangeException(nameof(pipeId));
         }
 
-        if (this.handle == IntPtr.Zero)
+        if (!this.IsOpened)
         {
             throw new FtException("Device not opened.", FtStatus.OtherError);
         }
@@ -179,7 +184,7 @@ public class Ftd3xxWrapperWindows : IFtd3xxWrapper
             throw new ArgumentOutOfRangeException(nameof(pipeId));
         }
 
-        if (this.handle == IntPtr.Zero)
+        if (!this.IsOpened)
         {
             throw new FtException("Device not opened.", FtStatus.OtherError);
         }
@@ -247,7 +252,7 @@ public class Ftd3xxWrapperWindows : IFtd3xxWrapper
     /// <param name="raiseException">Raise exception on error</param>
     private void CloseImpl(bool raiseException)
     {
-        if (this.handle == IntPtr.Zero)
+        if (!this.IsOpened)
         {
             return;
         }
@@ -264,6 +269,10 @@ public class Ftd3xxWrapperWindows : IFtd3xxWrapper
             {
                 exceptions.Add(ex);
             }
+            finally
+            {
+                pipe.Disposed = true;
+            }
         }
 
         this.pipes.Clear();
@@ -276,7 +285,7 @@ public class Ftd3xxWrapperWindows : IFtd3xxWrapper
 
         this.handle = IntPtr.Zero;
 
-        if (raiseException)
+        if (raiseException && exceptions.Count > 0)
         {
             throw new AggregateException(exceptions);
         }
