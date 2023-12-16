@@ -133,7 +133,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
         var nodeStatus = FT_GetDeviceInfoList(nodes, out numberOfDevices).ToStatus();
         if (nodeStatus != FtStatus.Ok)
         {
-            throw new FtException("Cannot get device info list", nodeStatus);
+            throw new FtException($"Cannot get device info list: {nodeStatus}", nodeStatus);
         }
 
         return nodes;
@@ -168,7 +168,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
         var status = FT_Create(new IntPtr((int)deviceIndex), 0x10, ref this.handle).ToStatus();
         if (status != FtStatus.Ok)
         {
-            throw new FtException("Cannot create device handle", status);
+            throw new FtException($"Cannot create device handle: {status}", status);
         }
 
         if (this.handle == IntPtr.Zero)
@@ -309,7 +309,7 @@ public class Ftd3xxWrapperLinux : IFtd3xxWrapper
         var status = FT_Close(this.handle).ToStatus();
         if (status != FtStatus.Ok)
         {
-            exceptions.Add(new FtException("Error on close device handle", status));
+            exceptions.Add(new FtException($"Error on close device handle: {status}", status));
         }
 
         this.handle = IntPtr.Zero;

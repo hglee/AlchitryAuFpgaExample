@@ -47,3 +47,15 @@ Flags: 4, Type: 258, ID: 403601E, SerialNumber: 000000000001, Description: FTDI 
 181.88 (MB/s) - 181895168 bytes in 1000104.30 (us)
 186.08 (MB/s) - 186089472 bytes in 1000026.20 (us)
 ```
+
+## MCS Chart App
+
+'McsChartApp' 프로그램은 FT600으로 명령을 전송하고 FT600에서 데이터를 받아옵니다. 이 프로그램은 [FtMcs](../FtMcs/README.md) 와 같이 동작하도록 되어있습니다. 동적 라이브러리 (.so 혹은 .dll)을 빌드된 디렉토리에서 찾을 수 있도록 주의합니다.
+
+```
+sudo dotnet run --project McsChartApp -c Release
+```
+
+'Refresh Device List' 버튼을 눌러서 갱신 후 대상 장치를 선택합니다. 그 후 'Start' 버튼을 눌러서 동작을 시작합니다. 전송된 데이터는 차트 영역에서 확인할 수 있습니다:
+
+![McsChartApp](../docs/FtMcsChartApp.png)

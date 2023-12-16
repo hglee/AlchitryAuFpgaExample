@@ -1,0 +1,173 @@
+<Window
+    x:Class="McsChartApp.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonia="http://oxyplot.org/avalonia"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:McsChartApp.ViewModels"
+    Title="MCS Chart App"
+    Width="860"
+    Height="600"
+    MinWidth="860"
+    MinHeight="600"
+    d:DesignHeight="600"
+    d:DesignWidth="860"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*,300">
+        <!--  Left workspace  -->
+        <StackPanel
+            Grid.Column="0"
+            Margin="6"
+            Orientation="Vertical">
+
+            <Button
+                Height="36"
+                Margin="6"
+                Command="{Binding RefreshDeviceListCommand}"
+                Content="Refresh Device List" />
+
+            <!--  device grid  -->
+            <DataGrid
+                x:Name="DeviceListGrid"
+                Height="150"
+                Margin="6"
+                IsEnabled="{Binding !Started}"
+                ItemsSource="{Binding DeviceList}"
+                SelectedItem="{Binding SelectedDeviceItem}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Binding="{Binding Index}"
+                        Header="Index"
+                        IsVisible="False" />
+                    <DataGridTextColumn Binding="{Binding SerialNumber}" Header="S/N" />
+                    <DataGridTextColumn Binding="{Binding Description}" Header="Desc." />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel
+                Height="36"
+                Margin="6"
+                Orientation="Horizontal">
+
+                <ComboBox
+                    Width="90"
+                    Margin="0,0,6,0"
+                    IsEnabled="{Binding !Started}"
+                    SelectedIndex="{Binding SignalTypeIndex}">
+
+                    <ComboBoxItem Content="Linear" />
+                    <ComboBoxItem Content="Sine" />
+                </ComboBox>
+
+                <Button
+                    Margin="6,0,6,0"
+                    Command="{Binding StartCommand}"
+                    Content="Start" />
+                <Button
+                    Margin="6,0,6,0"
+                    Command="{Binding StopCommand}"
+                    Content="Stop" />
+            </StackPanel>
+
+            <avalonia:PlotView
+                Height="300"
+                Margin="6"
+                Model="{Binding PlotModel}" />
+        </StackPanel>
+
+        <!--  Right setting  -->
+        <Grid
+            Grid.Column="1"
+            Margin="6"
+            ColumnDefinitions="170,*"
+            IsEnabled="{Binding !Started}"
+            RowDefinitions="36,36,36,36,36,36,36,36,36">
+
+            <!--  Refresh  -->
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Refresh Timeout (ms)" />
+            <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="{Binding RefreshTimeoutMs}" />
+
+            <!--  Read pipe  -->
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Read Pipe ID: " />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="{Binding ReadPipeOption.PipeId}" />
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Read Pipe Size: " />
+            <TextBox
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="{Binding ReadPipeOption.StreamSize}" />
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Read Pipe Timeout (ms): " />
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="1"
+                Text="{Binding ReadPipeOption.TimeoutMs}" />
+
+            <!--  Write pipe  -->
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Write Pipe ID: " />
+            <TextBox
+                Grid.Row="4"
+                Grid.Column="1"
+                Text="{Binding WritePipeOption.PipeId}" />
+
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Write Pipe Size: " />
+            <TextBox
+                Grid.Row="5"
+                Grid.Column="1"
+                Text="{Binding WritePipeOption.StreamSize}" />
+
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Write Pipe Timeout (ms): " />
+            <TextBox
+                Grid.Row="6"
+                Grid.Column="1"
+                Text="{Binding WritePipeOption.TimeoutMs}" />
+        </Grid>
+    </Grid>
+</Window>

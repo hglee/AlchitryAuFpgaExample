@@ -155,7 +155,7 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
         var status = FT_SetStreamPipe(this.handle, 0, 0, this.PipeId, streamSize).ToStatus();
         if (status != FtStatus.Ok)
         {
-            throw new FtException("Error on SetStreamPipe", status);
+            throw new FtException($"Error on SetStreamPipe: {status}", status);
         }
     }
 
@@ -170,7 +170,7 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
         var status = FT_SetPipeTimeout(this.handle, this.PipeId, timeoutMs).ToStatus();
         if (status != FtStatus.Ok)
         {
-            throw new FtException("Error on SetPipeTimeout", status);
+            throw new FtException($"Error on SetPipeTimeout: {status}", status);
         }
     }
 
@@ -185,7 +185,7 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
         var status = FT_AbortPipe(this.handle, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
-            throw new FtException("Error on AbortPipe", status);
+            throw new FtException($"Error on AbortPipe: {status}", status);
         }
     }
 
@@ -200,7 +200,7 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
         var status = FT_FlushPipe(this.handle, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
-            throw new FtException("Error on FlushPipe", status);
+            throw new FtException($"Error on FlushPipe: {status}", status);
         }
     }
 
@@ -215,7 +215,7 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
         var status = FT_ClearStreamPipe(this.handle, 0, 0, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
-            throw new FtException("Error on ClearStreamPipe", status);
+            throw new FtException($"Error on ClearStreamPipe: {status}", status);
         }
     }
 
@@ -240,19 +240,19 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
         var status = FT_AbortPipe(this.handle, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
-            exceptions.Add(new FtException("Error on AbortPipe", status));
+            exceptions.Add(new FtException($"Error on AbortPipe: {status}", status));
         }
 
         status = FT_FlushPipe(this.handle, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
-            exceptions.Add(new FtException("Error on FlushPipe", status));
+            exceptions.Add(new FtException($"Error on FlushPipe: {status}", status));
         }
 
         status = FT_ClearStreamPipe(this.handle, 0, 0, this.PipeId).ToStatus();
         if (status != FtStatus.Ok)
         {
-            exceptions.Add(new FtException("Error on ClearStreamPipe", status));
+            exceptions.Add(new FtException($"Error on ClearStreamPipe: {status}", status));
         }
 
         if (exceptions.Count > 0)
@@ -299,7 +299,7 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
 
         if (status != FtStatus.Ok)
         {
-            throw new FtException("Error on ReadPipe", status);
+            throw new FtException($"Error on ReadPipe: {status}", status);
         }
 
         return readSize;
@@ -343,7 +343,7 @@ public class Ftd3xxPipeWindows : IFtd3xxPipe
 
         if (status != FtStatus.Ok)
         {
-            throw new FtException("Error on WritePipe", status);
+            throw new FtException($"Error on WritePipe: {status}", status);
         }
 
         return writeSize;
