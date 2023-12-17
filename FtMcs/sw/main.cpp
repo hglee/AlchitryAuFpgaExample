@@ -11,11 +11,15 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+extern const uint16_t gSinTableStep;
+extern const uint16_t gSinTable[];
+
 enum {
 	LED_POWER = 0,
 	LED_STARTED = 1,
 	LED_TX = 2,
-	LED_LINEAR = 3
+	LED_LINEAR = 3,
+	NUM_OF_BURST_INSERT = 4
 };
 
 static void ftService(Ft600Core *ft, GpoCore *led)
@@ -23,6 +27,7 @@ static void ftService(Ft600Core *ft, GpoCore *led)
 	static int isStarted = 0;
 	static int isLinear = 0;
 	static uint16_t linearCount = 0;
+	static uint16_t sineCount = 0;
 
 	const uint32_t stat = ft->readStatReg();
 	const int valid = static_cast<int>((stat >> 16) & 0x1);
@@ -63,27 +68,36 @@ static void ftService(Ft600Core *ft, GpoCore *led)
 			// just burst insert
 			if (isLinear) {
 
-				ft->forceTxData(linearCount);
-				++linearCount;
+				for (int i = 0; i < NUM_OF_BURST_INSERT; ++i) {
 
-				ft->forceTxData(linearCount);
-				++linearCount;
+					ft->forceTxData(linearCount);
+					++linearCount;
 
-				ft->forceTxData(linearCount);
-				++linearCount;
+					ft->forceTxData(linearCount);
+					++linearCount;
 
-				ft->forceTxData(linearCount);
-				++linearCount;
+					ft->forceTxData(linearCount);
+					++linearCount;
+
+					ft->forceTxData(linearCount);
+					++linearCount;
+				}
 
 				led->write(1, LED_LINEAR);
 
 			} else {
 
-				// TODO: generate sine value
-				ft->forceTxData(0xffff);
-				ft->forceTxData(0xffff);
-				ft->forceTxData(0xffff);
-				ft->forceTxData(0xffff);
+				for (int i = 0; i < NUM_OF_BURST_INSERT; ++i) {
+
+					ft->forceTxData(gSinTable[sineCount]);
+
+					++sineCount;
+
+					if (sineCount >= gSinTableStep) {
+
+						sineCount = 0;
+					}
+				}
 
 				led->write(0, LED_LINEAR);
 			}

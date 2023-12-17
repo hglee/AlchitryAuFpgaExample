@@ -426,6 +426,14 @@ public class MainWindowViewModel : ViewModelBase, IDisposable
         this.PlotModel.Axes[0].Reset();
 
         this.PlotModel.InvalidatePlot(true);
+
+        var signalType = (SignalType) this.SignalTypeIndex;
+
+        if (signalType == SignalType.Sine)
+        {
+            // source range: 256
+            this.PlotModel.DefaultXAxis.Maximum = 1024;
+        }
     }
 
     /// <summary>

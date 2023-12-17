@@ -313,7 +313,7 @@ public class MainModel : IMainModel
                 if ((data & 0x8000) != 0)
                 {
                     // negative
-                    var sample = (data & 0x7fff) / -32767.0;
+                    var sample = ((ushort)(~data + 1)) / -32767.0;
 
                     result[i] = sample;
                 }
