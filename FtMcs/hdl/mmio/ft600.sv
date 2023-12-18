@@ -65,15 +65,15 @@ module ft600
      #(.CDC_SYNC_STAGES(2),
        .FIFO_MEMORY_TYPE("auto"),
        .FIFO_WRITE_DEPTH(RX_FIFO_DEPTH),
-       .PROG_FULL_THRESH(496),
+       .PROG_FULL_THRESH(RX_FIFO_DEPTH-16),
        .READ_DATA_WIDTH(DATA_WIDTH+2),
        .READ_MODE("fwft"),
        .WRITE_DATA_WIDTH(DATA_WIDTH+2),
 `ifdef SYNTHESIS
        .USE_ADV_FEATURES("1002")
 `else
-       .RD_DATA_COUNT_WIDTH(10),
-       .WR_DATA_COUNT_WIDTH(10),
+       .RD_DATA_COUNT_WIDTH($clog2(RX_FIFO_DEPTH)+1),
+       .WR_DATA_COUNT_WIDTH($clog2(RX_FIFO_DEPTH)+1),
        .USE_ADV_FEATURES("1707")
 `endif
        ) rx_fifo_unit
@@ -107,8 +107,8 @@ module ft600
 `ifdef SYNTHESIS
        .USE_ADV_FEATURES("0000")
 `else
-       .RD_DATA_COUNT_WIDTH(10),
-       .WR_DATA_COUNT_WIDTH(10),
+       .RD_DATA_COUNT_WIDTH($clog2(TX_FIFO_DEPTH)+1),
+       .WR_DATA_COUNT_WIDTH($clog2(TX_FIFO_DEPTH)+1),
        .USE_ADV_FEATURES("0707")
 `endif
        ) tx_fifo_unit

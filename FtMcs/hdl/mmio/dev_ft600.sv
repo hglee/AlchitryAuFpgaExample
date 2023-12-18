@@ -21,16 +21,15 @@ module dev_ft600
    logic        tx_en;
    logic        tx_full;
 
-   ft600 ft_unit (
-                  .clk(wb.CLK),
-                  .rst(wb.RST),
-                  .ft(ft),
-                  .rx_en(rx_en),
-                  .rx_data(rx_data),
-                  .rx_valid(rx_valid),
-                  .tx_en(tx_en),
-                  .tx_data(wb.DAT_I[15:0]),
-                  .tx_full(tx_full));
+   ft600 #(.RX_FIFO_DEPTH(64)) ft_unit (.clk(wb.CLK),
+                                        .rst(wb.RST),
+                                        .ft(ft),
+                                        .rx_en(rx_en),
+                                        .rx_data(rx_data),
+                                        .rx_valid(rx_valid),
+                                        .tx_en(tx_en),
+                                        .tx_data(wb.DAT_I[15:0]),
+                                        .tx_full(tx_full));
 
    assign rd_en = wb.CYC && wb.STB && !wb.WE;
    assign wr_en = wb.CYC && wb.STB && wb.WE;
