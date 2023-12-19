@@ -2,6 +2,12 @@
 
 Receives start command from PC and generate data to PC.
 
+Using Microblaze MCS, it receives commands from FT600, generates data, and transmits it to FT600.
+
+You can use the client application to send commands and check received data.
+
+Using the client application, you can send commands and check the received data on the chart.
+
 ## Target
 ### Software
 
