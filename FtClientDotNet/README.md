@@ -58,4 +58,4 @@ sudo dotnet run --project McsChartApp -c Release
 
 Press 'Refresh Device List' and select target device. Then press 'Start' button to start operation. You can check data on chart area:
 
-![McsChartApp](../docs/FtMcsChartApp.png)
+<img src='../docs/FtMcsChartApp.png' alt='McsChartApp' width='700'/>

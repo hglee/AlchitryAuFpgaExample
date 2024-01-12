@@ -26,7 +26,7 @@
 
 프로젝트 생성 시 part를 `xc7a35tftg256-1` 로 선택합니다.
 
-![Parts](../docs/part.png)
+<img src='../docs/part.png' alt='Parts' width='700'/>
 
 2. 프로젝트에 constraint 파일 추가
 
@@ -42,7 +42,7 @@
 
 `Implementation` 에서 우클릭 후 `write_bitstream` 부분의 `bin_file` 을 활성화합니다.
 
-![bin file option](../docs/imple.png)
+<img src='../docs/imple.png' alt='bin file option' width='700'/>
 
 5. 비트스트림 생성
 

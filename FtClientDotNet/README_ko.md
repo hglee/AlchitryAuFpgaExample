@@ -58,4 +58,4 @@ sudo dotnet run --project McsChartApp -c Release
 
 'Refresh Device List' 버튼을 눌러서 갱신 후 대상 장치를 선택합니다. 그 후 'Start' 버튼을 눌러서 동작을 시작합니다. 전송된 데이터는 차트 영역에서 확인할 수 있습니다:
 
-![McsChartApp](../docs/FtMcsChartApp.png)
+<img src='../docs/FtMcsChartApp.png' alt='McsChartApp' width='700'/>

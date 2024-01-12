@@ -28,13 +28,13 @@ If you want just UART tx without MCS, you can use source under `hdl_without_msc`
 
 You need to select part `xc7a35tftg256-1`.
 
-![Parts](../docs/part.png)
+<img src='../docs/part.png' alt='Parts' width='700'/>
 
 2. Add Microblaze MCS IP
 
 Select `IP Catalog` under project, search and open `Microblaze MCS`.
 
-![IP Catalog](docs/03_IP.png)
+<img src='docs/03_IP.png' alt='IP Catalog' width='900'/>
 
 Option
 
@@ -44,7 +44,7 @@ Option
 - MCS Enable IO BUS
 - Others to default
 
-![MCS](docs/04_MCS.png)
+<img src='docs/04_MCS.png' alt='MCS' width='700'/>
 
 3. Add constraint file to project.
 
@@ -60,7 +60,7 @@ You need generate bin file to upload.
 
 Right click on `Implementation` and enable `bin_file` in `write_bitstream` section.
 
-![bin file option](../docs/imple.png)
+<img src='../docs/imple.png' alt='bin file option' width='700'/>
 
 6. Generate Bitstream
 
@@ -89,10 +89,13 @@ Run `Vitis`, not `Vitis HLS`. If you cannot find `Vitis`, you need to install it
 - Set OS to `standalone`
 - Use `Empty Application(C++) template`
 
-![App Project 1](docs/05_App_01.png)
-![App Project 2](docs/05_App_02.png)
-![App Project 3](docs/05_App_03.png)
-![App Project 4](docs/05_App_04.png)
+<img src='docs/05_App_01.png' alt='App Project 1' width='700'/>
+
+<img src='docs/05_App_02.png' alt='App Project 2' width='700'/>
+
+<img src='docs/05_App_03.png' alt='App Project 3' width='700'/>
+
+<img src='docs/05_App_04.png' alt='App Project 4' width='700'/>
 
 2. Import source files to project.
 
@@ -124,9 +127,11 @@ You can skip step 1 ~ 4 if you created project by script.
 - Select `Hardware Design` and select exported hardware previous step (mcs_top.xsa)
 - Select `standalone` OS and `microblaze_I` processor.
 
-![Name and Location](docs/07_APP_platform_01.png)
-![Flow](docs/07_APP_platform_02.png)
-![Os and Processor](docs/07_APP_platform_03.png)
+<img src='docs/07_APP_platform_01.png' alt='Name and Location' width='700'/>
+
+<img src='docs/07_APP_platform_02.png' alt='Flow' width='700'/>
+
+<img src='docs/07_APP_platform_03.png' alt='OS and Processor' width='700'/>
 
 2. Create new Application Component in Vitis.
 
@@ -135,9 +140,11 @@ You can skip step 1 ~ 4 if you created project by script.
 - Select created platform in previous step (platform_mcs)
 - Select `standalone_microblaze_I` domain
 
-![Name and Location](docs/07_APP_app_01.png)
-![Hardware](docs/07_APP_app_02.png)
-![Domain](docs/07_APP_app_03.png)
+<img src='docs/07_APP_app_01.png' alt='Name and Location' width='700'/>
+
+<img src='docs/07_APP_app_02.png' alt='Hardware' width='700'/>
+
+<img src='docs/07_APP_app_03.png' alt='Domain' width='700'/>
 
 3. Import source files to project.
 
@@ -145,11 +152,11 @@ Right click on `Sources > src` on applcation component and import all source fil
 
 Be careful not to import to upper level `Sources` folder.
 
-![Import](docs/07_APP_import_01.png)
+<img src='docs/07_APP_import_01.png' alt='Import' width='400'/>
 
 4. Build elf file.
 
-![FLOW](docs/07_APP_flow.png)
+<img src='docs/07_APP_flow.png' alt='FLOW' width='300'/>
 
 You can build on below `FLOW` tab.
 
@@ -163,8 +170,9 @@ You can find generated elf file under build folder in application project.
 
 Select project and open `Tools > Associate ELF files` and set generated elf file to `Design Sources > cpu`.
 
-![Elf 1](docs/06_Elf_01.png)
-![Elf 2](docs/06_Elf_02.png)
+<img src='docs/06_Elf_01.png' alt='Elf 1' width='600'/>
+
+<img src='docs/06_Elf_02.png' alt='Elf 2' width='500'/>
 
 2. Generate bitstream again.
 

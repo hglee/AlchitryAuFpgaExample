@@ -28,13 +28,13 @@ MCS 를 사용하지 않고 단순 UART tx만 사용하려는 경우 `hdl_withou
 
 프로젝트 생성 시 part를 `xc7a35tftg256-1` 로 선택합니다.
 
-![Parts](../docs/part.png)
+<img src='../docs/part.png' alt='Parts' width='700'/>
 
 2. Microblaze MCS IP 추가
 
 프로젝트 상의 `IP Catalog` 을 선택하고, `Microblaze MCS` 을 검색하여 엽니다.
 
-![IP Catalog](docs/03_IP.png)
+<img src='docs/03_IP.png' alt='IP Catalog' width='900'/>
 
 옵션
 
@@ -44,7 +44,7 @@ MCS 를 사용하지 않고 단순 UART tx만 사용하려는 경우 `hdl_withou
 - MCS Enable IO BUS
 - Others to default
 
-![MCS](docs/04_MCS.png)
+<img src='docs/04_MCS.png' alt='MCS' width='700'/>
 
 3. 프로젝트에 constraint 파일 추가
 
@@ -60,7 +60,7 @@ MCS 를 사용하지 않고 단순 UART tx만 사용하려는 경우 `hdl_withou
 
 `Implementation` 에서 우클릭 후 `write_bitstream` 부분의 `bin_file` 을 활성화합니다.
 
-![bin file option](../docs/imple.png)
+<img src='../docs/imple.png' alt='bin file option' width='700'/>
 
 6. 비트스트림 생성
 
@@ -89,10 +89,13 @@ MCS 를 사용하지 않고 단순 UART tx만 사용하려는 경우 `hdl_withou
 - OS를 `standalone` 선택합니다.
 - `Empty Application(C++) template` 를 선택합니다.
 
-![App Project 1](docs/05_App_01.png)
-![App Project 2](docs/05_App_02.png)
-![App Project 3](docs/05_App_03.png)
-![App Project 4](docs/05_App_04.png)
+<img src='docs/05_App_01.png' alt='App Project 1' width='700'/>
+
+<img src='docs/05_App_02.png' alt='App Project 2' width='700'/>
+
+<img src='docs/05_App_03.png' alt='App Project 3' width='700'/>
+
+<img src='docs/05_App_04.png' alt='App Project 4' width='700'/>
 
 2. 프로젝트에 소스 파일 import
 
@@ -124,9 +127,11 @@ Vitis 2023.2에서 기본적으로 Vitis Unified IDE로 변경되었습니다. �
 - `Hardware Design` 을 선택하고 이전 단계에서 내보낸 hardward를 선택합니다 (mcs_top.xsa)
 - OS에는 `standalone` 을 processor 에는 `microblaze_I` 를 선택합니다.
 
-![Name and Location](docs/07_APP_platform_01.png)
-![Flow](docs/07_APP_platform_02.png)
-![Os and Processor](docs/07_APP_platform_03.png)
+<img src='docs/07_APP_platform_01.png' alt='Name and Location' width='700'/>
+
+<img src='docs/07_APP_platform_02.png' alt='Flow' width='700'/>
+
+<img src='docs/07_APP_platform_03.png' alt='OS and Processor' width='700'/>
 
 2. Vitis 에서 새 Application Component 생성
 
@@ -135,9 +140,11 @@ Vitis 2023.2에서 기본적으로 Vitis Unified IDE로 변경되었습니다. �
 - 이전 단계에서 생성한 platform 을 선택합니다. (platform_mcs)
 - domain에는 기본적으로 `standalone_microblaze_I` 를 선택합니다.
 
-![Name and Location](docs/07_APP_app_01.png)
-![Hardware](docs/07_APP_app_02.png)
-![Domain](docs/07_APP_app_03.png)
+<img src='docs/07_APP_app_01.png' alt='Name and Location' width='700'/>
+
+<img src='docs/07_APP_app_02.png' alt='Hardware' width='700'/>
+
+<img src='docs/07_APP_app_03.png' alt='Domain' width='700'/>
 
 3. 프로젝트에 소스 파일 가져오기
 
@@ -145,11 +152,11 @@ Application component의 `Source > src` 에서 우클릭하여 `sw` 디렉토리
 
 상위 폴더인 `Sources` 로 가져오지 않도록 주의합니다.
 
-![Import](docs/07_APP_import_01.png)
+<img src='docs/07_APP_import_01.png' alt='Import' width='400'/>
 
 4. elf 파일 빌드
 
-![FLOW](docs/07_APP_flow.png)
+<img src='docs/07_APP_flow.png' alt='FLOW' width='300'/>
 
 `FLOW` 탭 하위의 항목을 사용하여 빌드할 수 있습니다.
 
@@ -164,8 +171,9 @@ Application component의 `Source > src` 에서 우클릭하여 `sw` 디렉토리
 
 프로젝트를 선택하고, 메뉴 상의 `Tools > Associate ELF files` 을 선택한 후 `Design Sources > cpu` 부분에 생성된 elf 파일을 지정합니다.
 
-![Elf 1](docs/06_Elf_01.png)
-![Elf 2](docs/06_Elf_02.png)
+<img src='docs/06_Elf_01.png' alt='Elf 1' width='600'/>
+
+<img src='docs/06_Elf_02.png' alt='Elf 2' width='500'/>
 
 2. bitstream 을 다시 생성
 
